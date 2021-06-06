@@ -5,9 +5,6 @@ defmodule Poll do
     %Poll{candidates: candidates}
   end
 
-  # TODO: Implement functions neccesary to make the tests in
-  # `test/poll_test.exs` pass. More info in README.md
-
   def start_link do
     spawn_link(Poll, :run, [new()])
   end
@@ -64,6 +61,11 @@ defmodule Poll do
   end
 
   defp handle(:exit, _state), do: :exit
+
+  defp handle(msg, state) do
+    IO.inspect(msg, label: "Unknown Msg")
+    state
+  end
 
   defp maybe_vote(%Candidate{name: name, votes: votes} = candidate, name_to_update)
        when name_to_update == name do
